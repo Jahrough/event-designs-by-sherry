@@ -1,0 +1,39 @@
+services:
+  db:
+    image: mysql:8.0
+    container_name: eds-db
+    command: --default-authentication-plugin=mysql_native_password
+    environment:
+      MYSQL_ROOT_PASSWORD: cookieMonster1966
+      MYSQL_DATABASE: eventdesigns_by_sherry
+      MYSQL_USER: admin
+      MYSQL_PASSWORD: cookieMonster1966
+      TZ: UTC
+    volumes:
+      - db_data:/var/lib/mysql
+    networks:
+      - eds-network
+
+  wordpress:
+    image: wordpress:latest
+    container_name: eds-wordpress
+    command: apache2-foreground -D SERVERNAME=localhost
+    ports:
+      - "8081:80"
+    environment:
+      WORDPRESS_DB_HOST: eds-db:3306
+      WORDPRESS_DB_NAME: eventdesigns_by_sherry
+      WORDPRESS_DB_USER: admin
+      WORDPRESS_DB_PASSWORD: cookieMonster1966
+    depends_on:
+      - db
+    volumes:
+      - .:/var/www/html
+    networks:
+      - eds-network
+
+volumes:
+  db_data:
+
+networks:
+  eds-network:
