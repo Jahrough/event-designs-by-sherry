@@ -17,8 +17,8 @@ services:
   # ---------------------------------------------------------------------------
   db:
     <<: *service_defaults
-
     image: mysql:8.0
+    container_name: eds-db
 
     command:
       - --default-authentication-plugin=mysql_native_password
@@ -45,13 +45,14 @@ services:
       timeout: 5s
       retries: 5
 
+    networks:
+      - eds-network
 
   # ---------------------------------------------------------------------------
   # WordPress (Apache + PHP 8.3)
   # ---------------------------------------------------------------------------
   wordpress:
     <<: *service_defaults
-
     image: wordpress:php8.3-apache
     container_name: eds-wordpress
 
@@ -66,7 +67,6 @@ services:
       - /tmp
 
     environment:
-      # Database
       WORDPRESS_DB_HOST: db:3306
       WORDPRESS_DB_NAME: ${MYSQL_DATABASE}
       WORDPRESS_DB_USER: ${MYSQL_USER}
@@ -102,20 +102,22 @@ services:
         ini_set('opcache.validate_timestamps', 1);
 
     volumes:
-      # WordPress core in Docker (FAST)
-      - wordpress_core:/var/www/html
-      # Only editable directories mounted
-      - ./wp-content/themes:/var/www/html/wp-content/themes:delegated
-      - ./wp-content/plugins:/var/www/html/wp-content/plugins:delegated
-      - ./wp-content/uploads:/var/www/html/wp-content/uploads:delegated
+      # Only mount user-editable content
+      - ./wp-content:/var/www/html/wp-content:delegated
+
     networks:
       - eds-network
 
 # -----------------------------------------------------------------------------
-# Named Volumes (Explicit Naming = No Future Surprises)
+# Named Volumes
 # -----------------------------------------------------------------------------
-
 volumes:
   db_data:
     name: eds_db_data
 
+# -----------------------------------------------------------------------------
+# Networks
+# -----------------------------------------------------------------------------
+networks:
+  eds-network:
+    driver: bridge
