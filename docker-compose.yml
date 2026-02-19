@@ -119,4 +119,3 @@ volumes:
   db_data:
     name: eds_db_data
 
-# wordpress_data removed to prevent overwriting core
