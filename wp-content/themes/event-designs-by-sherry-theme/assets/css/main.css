@@ -1,0 +1,296 @@
+/* Accessibility focus outline */
+:where(.wp-site-blocks *:focus) {
+  outline-width: 2px;
+  outline-style: solid;
+}
+
+/* Smooth scrolling */
+html {
+  scroll-behavior: smooth;
+}
+
+ul.custom-list li::before {
+  content: '';
+  display: inline-block;
+  background: url('check-icon.svg') no-repeat center;
+  background-size: 1em;
+  width: 1em;
+  height: 1em;
+  margin-right: 0.5em;
+}
+
+
+/* Hide on mobile */
+@media only screen and (max-width: 767px) {
+  .hide-on-mobile {
+    display: none !important;
+  }
+}
+
+
+
+/* Sticky header */
+header.wp-block-template-part {
+  position: sticky;
+  top: 0;
+  z-index: 9999;
+  background-color: #fff;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+/* Footer layout gap fix */
+footer :where(.is-layout-flex) {
+  gap: 0.25em !important;
+}
+
+
+.gkit-icon-box-header {
+  margin-bottom: 13px;
+}
+
+/* Accordion header text */
+.gkit-accordion .gkit-card-header>.gkit-btn-link {
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 26px;
+}
+
+/* Accordion padding */
+.gkit-accordion .gkit-card-header>.gkit-btn-link,
+.gkit-accordion .gkit-card-header {
+  padding-top: 20px;
+  padding-bottom: 20px;
+  background-color: transparent !important;
+}
+
+/* Accordion border */
+.gkit-accordion .gkit-card-header {
+  border-bottom: 1px solid #000;
+}
+
+/* .gkit-accordion .gkit-card .gkit-card-header > .gkit-btn-link {
+  background-color: #F7F1E7 !important;
+} */
+
+.gkit-accordion .gkit-card-body {
+  background-color: transparent !important;
+}
+
+/* Accordion body text */
+.gkit-accordion .gkit-card-body p {
+  font-size: 18px !important;
+  /* font-weight: 300 !important; */
+  line-height: 1.8 !important;
+}
+
+/*  */
+
+/* Center icons in icon box */
+.wp-block-gutenkit-icon-box .gkit-icon {
+  text-align: center;
+}
+
+/* Primary yellow icon fill */
+.wp-block-gutenkit-icon-box .gkit-icon,
+.svg svg {
+  fill: #FFD500 !important;
+}
+
+.faqs img,
+.how-it-works img,
+.circular-image img,
+.about-us img {
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+  border-radius: 50% !important;
+  object-fit: cover;
+  aspect-ratio: 1 / 1;
+  width: auto;
+  height: auto;
+}
+
+.service-overview p,
+.service-overview li {
+  line-height: 1.5 !important;
+  font-size: 18px;
+  font-weight: 300;
+}
+
+.service-overview .wp-block-heading {
+  margin-bottom: 0;
+}
+
+blockquote {
+  background-color: transparent !important;
+}
+
+.wp-block-button.primary>a,
+.wp-element-button.primary>a,
+.wp-block-button.secondary>a,
+.wp-element-button.secondary>a,
+.wp-block-button.tertiary>a,
+.wp-element-button.tertiary>a {
+  border-radius: 50px;
+  padding-left: 30px;
+  padding-right: 30px;
+  font-weight: 400;
+}
+
+
+.wp-block-button.primary>a,
+.wp-element-button.primary>a {
+  color: #fff;
+  background-color: #111 !important;
+  border: 2px solid #111;
+}
+
+
+.wp-block-button.secondary>a,
+.wp-element-button.secondary>a {
+  color: #111 !important;
+  background-color: #FFD500 !important;
+  border: 2px solid #FFD500;
+}
+
+.wp-block-button.secondary>a,
+.wp-element-button.secondary>a {
+  color: #111 !important;
+  background-color: #FFD500 !important;
+  border: 2px solid #FFD500;
+}
+
+.wp-block-button.tertiary>a,
+.wp-element-button.tertiary>a {
+  color: #111;
+  background-color: transparent !important;
+  border: 2px solid #FFD500;
+}
+
+/* Add border to services image 
+.services img {
+  border: thick #FFD500 solid;
+}
+*/
+
+
+/* Add border to about-us image */
+.about-us img {
+  border: thick #fff solid;
+}
+
+
+/* Base gallery container */
+.foogallery {
+  width: 100%;
+  max-width: 2012px;
+  margin: 0 auto;
+}
+
+/* Responsive gallery width */
+@media (max-width: 2012px) {
+  .foogallery {
+    width: 100%;
+    padding: 0 10px;
+  }
+}
+
+/* Carousel navigation buttons */
+.foogallery.fg-carousel.fg-dark.fg-inverted button.fg-carousel-next,
+.foogallery.fg-carousel.fg-dark.fg-inverted button.fg-carousel-prev,
+.foogallery.fg-carousel.fg-light button.fg-carousel-next,
+.foogallery.fg-carousel.fg-light button.fg-carousel-prev {
+  color: #000000;
+}
+
+/* Gallery image border (by ID) */
+.foogallery-2161 img {
+  border: 2px solid #FFD500 !important;
+}
+
+/* Gallery image border (by data attribute) */
+[data-foogallery-id="2161"] img {
+  border: 3px solid #FFD500 !important;
+}
+
+/* Round badge look */
+.ti-widget.ti-goog .ti-verified-by-row[data-style="1"]>.ti-inner {
+  border-radius: 50px;
+}
+
+
+.wp-block-gutenkit-blog-posts .gutenkit-blog-posts .gutenkit-blog-post-container {
+  width: 100%;
+}
+
+.wp-block-heading {
+  margin-bottom: 2rem;
+  line-height: 1.2;
+}
+
+.newsletter h4,
+.newsletter p {
+  /* margin-top: 10px !important; */
+  margin-bottom: 0px !important;
+}
+
+.fluentform {
+  margin-block-start: 0 !important;
+}
+
+iframe .booking-header {
+  display: none !important;
+}
+
+
+.md-layout.md-alignment-top-space-between,
+.md-title.ssa-type-header {
+  display: none !important;
+}
+
+h4.wp-block-heading {
+  margin-bottom: 0;
+}
+
+.gkit-accordion .gkit-card:not(:last-child) {
+  margin-bottom: 0;
+}
+
+.gkit-accordion .gkit-card-header {
+  padding-top: 0;
+  padding-bottom: 0;
+}
+
+
+
+.gkit-accordion .gkit-card-body {
+  padding: 30px;
+}
+
+
+:where(.wp-block-columns) {
+  margin-bottom: 0 !important;
+}
+
+.ti-widget.ti-goog .ti-rating-text,
+.ti-widget.ti-goog .ti-rating-text strong:not(.ti-rating-large),
+.ti-widget.ti-goog .ti-rating-text strong a,
+.ti-widget.ti-goog .ti-rating-text strong span,
+.ti-widget.ti-goog .ti-rating-text span strong,
+.ti-widget.ti-goog .ti-rating-text span,
+.ti-widget.ti-goog .ti-footer,
+.ti-widget.ti-goog .ti-footer strong:not(.ti-rating-large),
+.ti-widget.ti-goog .ti-footer span,
+.ti-widget.ti-goog .ti-footer strong a {
+  color: #fff !important;
+}
+
+
+:where(.wp-site-blocks)>* {
+  margin-block-start: 0 !important;
+  margin-block-end: 0;
+}
+
+/* :root :where(.is-layout-flow)>p {
+  /* margin-block-start: 0 !important; */
+/*}
+
+*/

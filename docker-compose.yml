@@ -1,39 +1,84 @@
+version: "3.9"
+
 services:
   db:
     image: mysql:8.0
     container_name: eds-db
-    command: --default-authentication-plugin=mysql_native_password
+    restart: unless-stopped
+    command:
+      - --default-authentication-plugin=mysql_native_password
+      - --innodb-buffer-pool-size=512M
+      - --max-connections=50
+      - --slow_query_log=0
+      - --skip-log-bin
     environment:
-      MYSQL_ROOT_PASSWORD: cookieMonster1966
-      MYSQL_DATABASE: eventdesigns_by_sherry
-      MYSQL_USER: admin
-      MYSQL_PASSWORD: cookieMonster1966
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
       TZ: UTC
     volumes:
       - db_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD-SHELL", "mysqladmin ping -h localhost -u${MYSQL_USER} -p${MYSQL_PASSWORD} || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    deploy:
+      resources:
+        limits:
+          memory: 1g
     networks:
       - eds-network
 
   wordpress:
-    image: wordpress:latest
+    image: wordpress:php8.3-apache
     container_name: eds-wordpress
-    command: apache2-foreground -D SERVERNAME=localhost
+    restart: unless-stopped
     ports:
       - "8081:80"
     environment:
-      WORDPRESS_DB_HOST: eds-db:3306
-      WORDPRESS_DB_NAME: eventdesigns_by_sherry
-      WORDPRESS_DB_USER: admin
-      WORDPRESS_DB_PASSWORD: cookieMonster1966
+      WORDPRESS_DB_HOST: ${WORDPRESS_DB_HOST}
+      WORDPRESS_DB_NAME: ${MYSQL_DATABASE}
+      WORDPRESS_DB_USER: ${MYSQL_USER}
+      WORDPRESS_DB_PASSWORD: ${MYSQL_PASSWORD}
+      WORDPRESS_TABLE_PREFIX: ${WORDPRESS_TABLE_PREFIX}
+
+      AUTH_KEY: ${AUTH_KEY}
+      SECURE_AUTH_KEY: ${SECURE_AUTH_KEY}
+      LOGGED_IN_KEY: ${LOGGED_IN_KEY}
+      NONCE_KEY: ${NONCE_KEY}
+      AUTH_SALT: ${AUTH_SALT}
+      SECURE_AUTH_SALT: ${SECURE_AUTH_SALT}
+      LOGGED_IN_SALT: ${LOGGED_IN_SALT}
+      NONCE_SALT: ${NONCE_SALT}
+
+      WORDPRESS_CONFIG_EXTRA: |
+        define('WP_MEMORY_LIMIT', '512M');
+        define('DISABLE_WP_CRON', true);
+        define('WP_DEBUG', false);
+        define('WP_DEBUG_LOG', false);
+        define('WP_DEBUG_DISPLAY', false);
+        define('WP_CACHE', true);
     depends_on:
-      - db
+      db:
+        condition: service_healthy
     volumes:
-      - .:/var/www/html
+      - wordpress_core:/var/www/html
+      - ./wp-content/themes:/var/www/html/wp-content/themes:delegated
+      - ./wp-content/plugins:/var/www/html/wp-content/plugins:delegated
+      - ./wp-content/uploads:/var/www/html/wp-content/uploads:delegated
+    deploy:
+      resources:
+        limits:
+          memory: 1g
     networks:
       - eds-network
 
 volumes:
   db_data:
+  wordpress_core:
 
 networks:
   eds-network:
+    driver: bridge

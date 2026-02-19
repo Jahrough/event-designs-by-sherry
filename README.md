@@ -1,1 +1,0 @@
-# event-designs-by-sherry
